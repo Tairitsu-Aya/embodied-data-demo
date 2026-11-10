@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.json -text
+*.gz -text
+*.mp4 -text
+*.webp -text
