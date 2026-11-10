@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f6f2">
+  <meta name="description" content="14个业务场景的第一视角操作数据，逐段浏览视频、动作标注与三维姿态。">
+  <title>具身数据 · 精选样本库</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">跳到样本浏览</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="具身数据样本库首页">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 10 16 3l12 7v13l-12 7-12-7zM4 10l12 7 12-7M16 17v13M10 6.5l12 7v13"/></svg>
+      <span><b>SYNERMIND</b><small>具身数据 · DATA STUDIO</small></span>
+    </a>
+    <nav class="header-nav" aria-label="主导航"><a href="#workspace" class="current">样本浏览</a><button id="export-csv" type="button">导出样本清单 <span aria-hidden="true">↗</span></button></nav>
+    <span class="local-status"><i></i>公开样本演示</span>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-copy"><p class="eyebrow">HUMAN DEMONSTRATIONS / SELECTED COLLECTION</p><h1 id="page-title">真实场景，完整操作。</h1><p class="intro-description">从 14 个业务大类中各选一个典型时长片段，<br class="mobile-break">以视频、动作语义与三维姿态，观察真实的人类操作。</p></div>
+      <div class="summary" aria-label="样本概览"><div><strong id="stat-count">14<span>类</span></strong><small>业务场景</small></div><div><strong id="stat-time">—</strong><small>片段总时长</small></div><div><strong id="stat-actions">—</strong><small>动作标注</small></div></div>
+    </section>
+
+    <section class="workspace" id="workspace" aria-label="数据浏览工作区">
+      <aside class="library" aria-label="场景与样本">
+        <div class="library-heading"><h2>场景目录</h2><span id="result-count">14 / 14</span></div>
+        <label class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input type="search" id="search" placeholder="搜索场景、细分类" aria-label="搜索场景、细分类" autocomplete="off"></label>
+        <div class="modality-filters" role="group" aria-label="按采集模态筛选"><button class="active" data-modality="all" aria-pressed="true">全部</button><button data-modality="mono" aria-pressed="false">单目</button><button data-modality="stereo" aria-pressed="false">双目</button></div>
+        <div class="sample-list" id="sample-list" aria-label="样本列表"><p class="loading-note">正在读取本地样本…</p></div>
+        <p class="selection-note"><span>选样原则</span>各大类时长中位数附近，每类一段。等距时保留较短片段。</p>
+      </aside>
+
+      <article class="sample-workbench" id="sample-workbench" aria-busy="true">
+        <div class="sample-heading"><div><div class="breadcrumb"><span id="group-label">精选样本</span><span aria-hidden="true">/</span><span id="subcategory-label">—</span></div><h2 id="sample-title">正在加载样本</h2></div><div class="sample-id"><span>SEQUENCE</span><code id="sample-sid">—</code></div></div>
+        <div class="sample-facts" id="sample-facts"></div>
+        <div class="inspection-grid">
+          <section class="visual-column" aria-label="视频及三维预览">
+            <div class="media-card">
+              <div class="media-toolbar"><div class="channel-tabs" id="channel-tabs" role="group" aria-label="视频通道"></div><span class="media-indicator"><i></i>同步标注</span></div>
+              <div class="video-stage"><video id="video" controls playsinline preload="metadata" aria-label="所选样本视频"></video><div class="video-corner">SYNERMIND <span>RESEARCH PREVIEW</span></div><p id="video-error" class="video-error" hidden></p></div>
+              <div class="playback-caption"><span id="current-action">播放视频，查看对应动作</span><span class="mono" id="playback-time">00:00 / 00:00</span></div>
+            </div>
+            <div class="timeline-block"><div class="timeline-heading"><span>动作分布</span><span class="muted">点击时间轴跳转</span></div><div class="timeline-track" id="timeline-track" role="slider" tabindex="0" aria-label="视频播放位置" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><canvas id="timeline-canvas" aria-hidden="true"></canvas><span id="playhead"></span></div><div class="timeline-labels"><span>00:00</span><span id="timeline-middle">—</span><span id="timeline-end">—</span></div></div>
+
+            <section class="pose-section" aria-labelledby="pose-title"><div class="section-line"><div><span class="eyebrow">SPATIAL SIGNALS</span><h3 id="pose-title">三维姿态与相机轨迹</h3></div><button id="toggle-pose" type="button" class="outline-button" aria-expanded="false">加载三维视图 <span>↗</span></button></div><p class="pose-intro" id="pose-intro">查看与视频同步的双手关节和相机运动。</p><div class="pose-content" id="pose-content" hidden><div class="pose-canvases"><div class="pose-viewport"><canvas id="hand-canvas" aria-label="三维手部姿态，可拖动旋转" tabindex="0"></canvas><div class="pose-legend"><span class="left-hand">左手</span><span class="right-hand">右手</span><span>拖动旋转 · 滚轮缩放</span></div><button class="reset-view" id="reset-view" aria-label="重置三维视角">重置视角</button></div><div class="camera-viewport"><canvas id="camera-canvas" aria-label="相机轨迹俯视图"></canvas><span class="camera-caption">相机轨迹 · 原始坐标 X / Z</span></div></div><p class="data-note" id="pose-note">几何为源数据的估计结果，有效帧比例不代表准确率。</p></div></section>
+          </section>
+
+          <section class="annotation-panel" aria-label="标注与样本信息"><div class="detail-tabs" role="tablist" aria-label="样本详情"><button id="tab-actions" role="tab" aria-selected="true" aria-controls="panel-actions" data-tab="actions">动作标注 <span id="action-count">0</span></button><button id="tab-info" role="tab" aria-selected="false" aria-controls="panel-info" data-tab="info" tabindex="-1">数据详情</button></div>
+            <div id="panel-actions" role="tabpanel" aria-labelledby="tab-actions"><div class="event-summary"><p class="eyebrow">TASK CONTEXT</p><h3 id="event-title">任务概述</h3><p id="event-description">正在读取动作标注。</p></div><div class="action-list-heading"><span>操作时间线</span><label><input type="checkbox" id="follow-actions" checked>跟随播放</label></div><div class="actions-list" id="actions-list"></div><p class="annotation-note">时间段来自原始标注。区间空隙不自动视为漏标。</p></div>
+            <div id="panel-info" role="tabpanel" aria-labelledby="tab-info" hidden><div id="info-content"></div></div>
+          </section>
+        </div>
+        <div class="sample-footer"><span id="position-label">01 / 14</span><p>保留原始细分类与源片段信息</p><div><button id="previous" aria-label="上一个样本">← 上一个</button><button id="next" aria-label="下一个样本">下一个 →</button></div></div>
+      </article>
+    </section>
+    <div class="page-footer"><span>真实采集 · 结构化标注 · 公开展示</span><span>14 场景精选 / 2026</span></div>
+    <p class="fatal-error" id="fatal-error" role="alert" hidden></p>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
