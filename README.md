@@ -2,6 +2,8 @@
 
 公开演示站点，纯HTML/CSS/JavaScript，无数据库或服务端运行依赖。
 
+[在线浏览](https://tairitsu-aya.github.io/embodied-data-demo/) · [来源视频下载](https://github.com/Tairitsu-Aya/embodied-data-demo/releases/tag/v1.0.0)
+
 - 14个业务大类各1段，保留细分类，共42分44.497秒。
 - 500条动作标注，76,883帧源几何数据，9个单目/5个双目样本。
 - `media/`：去重后的19份骨架预览；`raw/`：完整动作、标定和几何JSON；`derived/`：低帧率展示几何；`catalog.json`：完整选样元数据。
